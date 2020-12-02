@@ -1,0 +1,859 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "E-Commerce RESTFUL API Javier Hornero",
+        "description": "",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host":"localhost:8080",
+    "schemes":["http"],
+    "paths": {
+        "/auth/users": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create a user (SIGN UP) ",
+                "parameters": [
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "new user to be added",
+                        "required": true,
+                        "schema": { "$ref": "#/definitions/User"}
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "CREATED",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Authenticate as a user (LOG IN) ",
+                "parameters": [
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "log in information",
+                        "required": true,
+                        "schema": { "$ref": "#/definitions/userLogin"}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/token"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get all users (Admin) | Get your user information ( Store , User )",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update your user information",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "new user to be added",
+                        "required": true,
+                        "schema": { "$ref": "#/definitions/User"}
+                    }
+
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete a user (Admin)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"path",
+                        "name": "id",
+                        "description": "id of the user you want to delete",
+                        "required": true,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+
+        "/api/categories": {
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Create a new category (Admin)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "new category to be added",
+                        "required": true,
+                        "schema": { "$ref": "#/definitions/Category"}
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "CREATED",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get all categories (Admin)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categories/{id}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get a category given its id (Admin)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"path",
+                        "name": "id",
+                        "description": "id of the category we want to update",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"path",
+                        "name": "id",
+                        "description": "id of the category we want to get",
+                        "required": true,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Update your user information (Admin)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"path",
+                        "name": "id",
+                        "description": "id of the category we want to update",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "new user to be added",
+                        "required": true,
+                        "schema": { "$ref": "#/definitions/Category"}
+                    }
+
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Delete a category given its id (Admin)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"path",
+                        "name": "id",
+                        "description": "id of the category we want to delete",
+                        "required": true,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+
+        "/api/products": {
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Create a new product (Store)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "new product to be added",
+                        "required": true,
+                        "schema": { "$ref": "#/definitions/Product"}
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "CREATED",
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get all products (Admin or User) | Get all products from the store (Store)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"query",
+                        "name": "minPrice",
+                        "description": "minimum price of the products you want to fetch",
+                        "required": false,
+                        "type":"number"
+                    },
+                    {
+                        "in":"query",
+                        "name": "maxPrice",
+                        "description": "maximum price of the products you want to fetch",
+                        "required": false,
+                        "type":"number"
+                    },
+                    {
+                        "in":"query",
+                        "name": "category",
+                        "description": "category of the products you want to fetch",
+                        "required": false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type":"array",
+                            "items":{"$ref": "#/definitions/Product"}
+                        }
+                    }
+                }
+            }
+            
+        },
+        "/api/products/{id}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get a product from the store based given an id (Store)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"path",
+                        "name": "id",
+                        "description": "id of the product we want to get",
+                        "required": true,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Update a product (Store)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"path",
+                        "name": "id",
+                        "description": "id of the product we want to update",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "new product to be added",
+                        "required": true,
+                        "schema": { "$ref": "#/definitions/Product"}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Delete a product given its id (Store)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"path",
+                        "name": "id",
+                        "description": "id of the product we want to delete",
+                        "required": true,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    }
+                }
+            }
+            
+            
+        },
+
+        "/api/products/{productId}/reviews": {
+            "post": {
+                "tags": [
+                    "Reviews"
+                ],
+                "summary": "Create a review for a product (User)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"path",
+                        "name": "productId",
+                        "description": "id of the product we want to write the review about.",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"body",
+                        "name": "content",
+                        "description": "content of the review",
+                        "required": true,
+                        "schema": { "$ref": "#/definitions/Review"}
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "CREATED",
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Reviews"
+                ],
+                "summary": "Get reviews of a product (User)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"path",
+                        "name": "productId",
+                        "description": "id of the product we want to get the reviews from",
+                        "required": true,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type":"array",
+                            "items":{"$ref": "#/definitions/Review"}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/products/{productId}/reviews/{id}": {
+            "delete": {
+                "tags": [
+                    "Reviews"
+                ],
+                "summary": "Delete a review given its id (Admin)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"path",
+                        "name": "productId",
+                        "description": "id of the product we want to get the reviews from",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"path",
+                        "name": "id",
+                        "description": "id of the product we want to delete",
+                        "required": true,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Product"
+                        }
+                    }
+                }
+            }
+            
+            
+        },
+
+        "/api/carts": {
+            "get": {
+                "tags": [
+                    "Carts"
+                ],
+                "summary": "Get your own cart (User)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type":"array",
+                            "items":{"$ref": "#/definitions/Cart"}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Carts"
+                ],
+                "summary": "Update your own cart (User)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"body",
+                        "name": "body",
+                        "description": "introduce the id of the new product",
+                        "required": true,
+                        "schema":{
+                            "$ref":"#/definitions/Cart"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type":"array",
+                            "items":{"$ref": "#/definitions/Cart"}
+                        }
+                    }
+                }
+            }
+            
+        },
+
+        "/api/sales": {
+            "post": {
+                "tags": [
+                    "Sales"
+                ],
+                "summary": "Buy everything on the cart (User)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "CREATED",
+                        "schema": {
+                            "type":"array",
+                            "items":{"$ref": "#/definitions/Cart"}
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Sales"
+                ],
+                "summary": "Get all sales from a day (Admin) | Get all sales from a store (Store)",
+                "parameters": [
+                    {
+                        "in":"header",
+                        "name": "access-token",
+                        "description": "token returned when logging in",
+                        "required": true,
+                        "type":"string"
+                    },
+                    {
+                        "in":"query",
+                        "name": "date",
+                        "description": "date of the sales (Admin)",
+                        "required": false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type":"array",
+                            "items":{"$ref": "#/definitions/Sale"}
+                        }
+                    }
+                }
+            }
+        }
+
+    },
+
+    "definitions": {
+        "User": {
+            "type": "object",
+            "properties":{
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "rol": {
+                    "type": "string",
+                    "enum": ["user","store","admin"]
+                }
+            }
+        },
+        "userLogin":{
+            "type": "object",
+            "properties":{
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        
+        "Product":{
+            "type": "object",
+            "properties":{
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "stock": {
+                    "type": "number"
+                },
+                "storeId": {
+                    "type": "string"
+                }
+            }
+        },
+        "Cart": {
+            "type": "object",
+            "properties":{
+                "id": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
+                },
+                "productIds": {
+                    "type": "array",
+                    "items": {
+                        "type":"string"
+                    }
+                }
+            }
+        },
+        "Category":{
+            "type": "object",
+            "properties":{
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "Review":{
+            "type": "object",
+            "properties":{
+                "id": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "productId": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
+                }
+            }
+        },
+        "Sale":{
+            "type": "object",
+            "properties":{
+                "id": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "productId": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
+                },
+                "storeId": {
+                    "type": "string"
+                }
+            }
+        },
+        "token":{
+            "type": "object",
+            "properties":{
+                "jwt": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+
+}
